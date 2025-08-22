@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYNE – Coming Soon</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Moving gradient background -->
+  <div class="overlay"></div>
+  
+  <!-- Floating particles -->
+  <div class="particles"></div>
+
+  <div class="content">
+    <h1>
+      <span class="shine">COMING<br>SOON</span>
+    </h1>
+    <hr>
+    <p>Your next chapter of self-care is loading... stay with us.</p>
+
+    <!-- Waitlist form -->
+    <form class="waitlist" 
+          action="https://docs.google.com/forms/d/1S6yKQhGotwbORerfKauukNdUM7JyIa2A0dLlFNGSGN8/formResponse" 
+          method="POST" 
+          target="hidden_iframe" 
+          onsubmit="submitted=true">
+      <input type="email" name="entry.1000543611" placeholder="Enter your email" required>
+      <button type="submit">Join Waitlist</button>
+    </form>
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+    <p class="thankyou">Thanks! You're on the list.</p>
+  </div>
+
+  <!-- Glassy footer -->
+  <footer>© 2025 Kyne. All rights reserved.</footer>
+
+  <script>
+    // Fade-in page animation
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.style.opacity = "1";
+    });
+    
+
+    // Floating idle motion for overlay and particles
+    let t = 0;
+    function animateFloating() {
+      t += 0.003;
+      document.querySelector('.overlay').style.transform = 
+        `translate(${Math.sin(t)*10}px, ${Math.cos(t)*10}px)`;
+      document.querySelector('.particles').style.transform = 
+        `translate(${Math.cos(t)*5}px, ${Math.sin(t)*5}px)`;
+      requestAnimationFrame(animateFloating);
+    }
+    animateFloating();
+
+    // Mouse parallax for overlay
+    document.addEventListener('mousemove', e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      document.querySelector('.overlay').style.transform = 
+        `translate(${x}px, ${y}px)`;
+    });
+
+    // Waitlist submit -> show thank-you
+    let submitted = false;
+    document.querySelector('.waitlist').addEventListener('submit', function() {
+      setTimeout(() => {
+        if (submitted) {
+          document.querySelector('.thankyou').style.display = 'block';
+          document.querySelector('.waitlist').style.display = 'none';
+        }
+      }, 800);
+    });
+
+    // Create micro particles dynamically
+    const particles = document.querySelector('.particles');
+    for (let i=0; i<5; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.top = Math.random() * 100 + '%';
+      dot.style.left = Math.random() * 100 + '%';
+      particles.appendChild(dot);
+    }
+  </script>
+</body>
+</html>
